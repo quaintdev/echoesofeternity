@@ -1,0 +1,80 @@
+<html>
+
+<head>
+    <title>Quotes</title>
+    <style>
+        .header {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 32px 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            color: #00bfff; /* light blue */
+	font-family: "Courier New", monospace;
+        }
+
+        .card-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            margin: 16px;
+        }
+
+        .card-body {
+            flex: 1;
+            padding: 16px;
+        }
+
+        .card-text {
+            margin: 0;
+        }
+
+        .card-footer {
+            background-color: #f7f7f7;
+            border-top: 1px solid #ccc;
+            padding: 16px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <h1 class="header">Echoes of Eternity</h1>
+    <div class="card-wrapper">
+        <div id="quote-list"></div>
+    </div>
+    <script>
+        fetch("/quotes")
+            .then(response => response.json())
+            .then(quotes => {
+                const quoteList = document.getElementById("quote-list");
+                for (const quote of quotes) {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+						<div class="card-body">
+							<p class="card-text">"${quote.quote}"</p>
+						</div>
+						<div class="card-footer">
+							<p class="card-text">- ${quote.author}</p>
+						</div>
+					`;
+                    quoteList.appendChild(card);
+                }
+            });
+    </script>
+</body>
+
+</html>
